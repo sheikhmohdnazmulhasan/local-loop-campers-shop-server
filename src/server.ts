@@ -19,5 +19,3 @@ import config from "./app/configs";
         }
 
     })()
-
-    middleware
