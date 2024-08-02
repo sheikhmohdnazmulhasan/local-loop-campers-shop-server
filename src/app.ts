@@ -12,7 +12,7 @@ app.get('/', (req: Request, res: Response) => {
 });
 
 // application routes
-app.use('/api/v1', ProductRoutes)
+app.use('/api/v1/products', ProductRoutes)
 
 // global error handler
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
