@@ -1,6 +1,6 @@
-import mongoose from "mongoose";
+import mongoose, { skipMiddlewareFunction } from "mongoose";
 import app from "./app"
-import config from "./app/config";
+import config from "./app/configs";
 
 (
     async function () {
@@ -19,3 +19,5 @@ import config from "./app/config";
         }
 
     })()
+
+    middleware
