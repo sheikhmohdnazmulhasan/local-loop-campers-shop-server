@@ -8,6 +8,8 @@ const router = Router();
 router.post('/new', ValidationRequest(ProductValidations.createProductValidationSchema), ProductController.createProduct)
 
 router.get('/:id', ProductController.getSingleProduct);
-router.get('/', ProductController.getAllProducts)
+router.get('/', ProductController.getAllProducts);
+router.patch('/:id', ValidationRequest(ProductValidations.updateProductValidationSchema), ProductController.updateProduct)
+router.delete('/', ProductController.deleteProduct)
 
 export const ProductRoutes = router;

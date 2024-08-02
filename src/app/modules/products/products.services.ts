@@ -39,7 +39,30 @@ async function getSingleProductFromDb(id: string, next: NextFunction) {
     try {
         const result = await Product.findById(id);
 
+        if (!result) {
+            return { success: false, statusCode: httpStatus.BAD_REQUEST, message: 'Id not valid', data: null, error: null };
+        }
+
         return { success: true, statusCode: httpStatus.OK, message: 'Product retrieve successfully', data: result, error: null };
+
+    } catch (error) {
+        next(error)
+    }
+
+};
+
+async function updateProductIntoDb(id: string, payload: Partial<TProducts>, next: NextFunction) {
+
+    try {
+        const isValidId = await Product.findById(id);
+
+        if (!isValidId) {
+            return { success: false, statusCode: httpStatus.BAD_REQUEST, message: 'Id not valid', data: null, error: null };
+        }
+
+        const result = await Product.findByIdAndUpdate(id, payload, { new: true });
+
+        return { success: true, statusCode: httpStatus.OK, message: 'Product Updated successfully', data: result, error: null };
 
     } catch (error) {
         next(error)
@@ -47,4 +70,24 @@ async function getSingleProductFromDb(id: string, next: NextFunction) {
 
 }
 
-export const ProductServices = { createProductIntoDb, getAllProductsFromDb, getSingleProductFromDb }
+async function deleteProductFromDb(id: string, next: NextFunction) {
+
+    try {
+
+        const isValidId = await Product.findById(id);
+
+        if (!isValidId) {
+            return { success: false, statusCode: httpStatus.BAD_REQUEST, message: 'Id not valid', data: null, error: null };
+        }
+
+        const result = await Product.findByIdAndDelete(id);
+
+        return { success: true, statusCode: httpStatus.OK, message: 'Product deleted successfully', data: result, error: null };
+
+    } catch (error) {
+        next(error)
+    }
+
+}
+
+export const ProductServices = { createProductIntoDb, getAllProductsFromDb, getSingleProductFromDb, updateProductIntoDb, deleteProductFromDb }

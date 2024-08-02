@@ -62,6 +62,51 @@ async function getSingleProduct(req: Request, res: Response, next: NextFunction)
     } catch (error) {
         next(error)
     }
+};
+
+async function updateProduct(req: Request, res: Response, next: NextFunction) {
+    const { id } = req.params;
+    const payload = req.body;
+
+    console.log(payload);
+
+    try {
+        const result = await ProductServices.updateProductIntoDb(id, payload, next);
+
+        if (result) {
+            res.status(result.statusCode).json({
+                success: result.success,
+                statusCode: result.statusCode,
+                message: result.message,
+                data: result.data,
+                error: result.error
+            })
+        }
+
+    } catch (error) {
+        next(error)
+    }
 }
 
-export const ProductController = { createProduct, getAllProducts, getSingleProduct }
+async function deleteProduct(req: Request, res: Response, next: NextFunction) {
+    const { id } = req.query;
+
+    try {
+        const result = await ProductServices.deleteProductFromDb(id as string, next);
+
+        if (result) {
+            res.status(result.statusCode).json({
+                success: result.success,
+                statusCode: result.statusCode,
+                message: result.message,
+                data: result.data,
+                error: result.error
+            })
+        }
+
+    } catch (error) {
+        next(error)
+    }
+}
+
+export const ProductController = { createProduct, getAllProducts, getSingleProduct, updateProduct, deleteProduct }
