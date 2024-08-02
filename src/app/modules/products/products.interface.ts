@@ -6,5 +6,4 @@ export interface TProducts {
     quantity: number;
     category: string;
     images: string[];
-
 }
