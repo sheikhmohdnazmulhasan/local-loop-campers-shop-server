@@ -1,6 +1,7 @@
 import express, { NextFunction, Request, Response } from 'express';
 import cors from 'cors';
 import httpStatus from 'http-status';
+import { ProductRoutes } from './app/modules/products/products.route';
 const app = express()
 
 app.use(express.json());
@@ -9,6 +10,9 @@ app.use(cors())
 app.get('/', (req: Request, res: Response) => {
     res.send('Hello World!')
 });
+
+// application routes
+app.use('/api/v1', ProductRoutes)
 
 // global error handler
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {

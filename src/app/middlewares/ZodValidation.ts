@@ -1,4 +1,4 @@
-import { NextFunction, Request } from "express";
+import { NextFunction, Request, Response } from "express";
 import { AnyZodObject } from "zod";
 
 function ValidationRequest(schema: AnyZodObject) {
@@ -15,4 +15,6 @@ function ValidationRequest(schema: AnyZodObject) {
     };
 }
 
-export default ValidationRequest;
+export default ValidationRequest
+
+

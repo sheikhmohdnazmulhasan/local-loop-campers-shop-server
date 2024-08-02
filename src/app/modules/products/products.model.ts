@@ -8,6 +8,8 @@ const productsSchema = new Schema<TProducts>({
     quantity: { type: Number, required: true },
     price: { type: Number, required: true },
     images: { type: [String], required: true },
-});
 
-const Product = mongoose.model<TProducts>('product', productsSchema)
+}, { timestamps: true });
+
+const Product = mongoose.model<TProducts>('product', productsSchema);
+export default Product
