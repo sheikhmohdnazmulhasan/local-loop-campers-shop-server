@@ -7,6 +7,7 @@ const router = Router();
 
 router.post('/new', ValidationRequest(ProductValidations.createProductValidationSchema), ProductController.createProduct)
 
+router.get('/:id', ProductController.getSingleProduct);
 router.get('/', ProductController.getAllProducts)
 
 export const ProductRoutes = router;

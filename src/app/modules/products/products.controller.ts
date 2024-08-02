@@ -41,6 +41,27 @@ async function getAllProducts(req: Request, res: Response, next: NextFunction) {
     } catch (error) {
         next(error)
     }
+};
+
+async function getSingleProduct(req: Request, res: Response, next: NextFunction) {
+    const { id } = req.params;
+
+    try {
+        const result = await ProductServices.getSingleProductFromDb(id, next);
+
+        if (result) {
+            res.status(result.statusCode).json({
+                success: result.success,
+                statusCode: result.statusCode,
+                message: result.message,
+                data: result.data,
+                error: result.error
+            })
+        }
+
+    } catch (error) {
+        next(error)
+    }
 }
 
-export const ProductController = { createProduct, getAllProducts }
+export const ProductController = { createProduct, getAllProducts, getSingleProduct }
