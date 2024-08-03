@@ -9,7 +9,7 @@ router.post('/new', ValidationRequest(ProductValidations.createProductValidation
 
 router.get('/:id', ProductController.getSingleProduct);
 router.get('/', ProductController.getAllProducts);
-router.patch('/:id', ValidationRequest(ProductValidations.updateProductValidationSchema), ProductController.updateProduct)
+router.put('/:id', ValidationRequest(ProductValidations.updateProductValidationSchema), ProductController.updateProduct)
 router.delete('/', ProductController.deleteProduct)
 
 export const ProductRoutes = router;
