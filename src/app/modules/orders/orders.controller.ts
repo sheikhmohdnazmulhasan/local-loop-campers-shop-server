@@ -41,4 +41,25 @@ async function getOrders(req: Request, res: Response, next: NextFunction) {
     }
 }
 
-export const OrderControllers = { createOrder, getOrders }
+async function getSingleOrder(req: Request, res: Response, next: NextFunction) {
+    const { id } = req.params;
+
+    try {
+        const result = await OrderServices.getSingleOrderFromDb(id, next);
+
+        if (result) {
+            res.status(result.statusCode).json({
+                success: result.success,
+                statusCode: result.statusCode,
+                message: result.message,
+                data: result.data,
+                error: result.error
+            })
+        }
+
+    } catch (error) {
+        next(error);
+    }
+}
+
+export const OrderControllers = { createOrder, getOrders, getSingleOrder }

@@ -65,4 +65,16 @@ async function getOrdersFromDb(next: NextFunction) {
     }
 }
 
-export const OrderServices = { createOrderIntoDb, getOrdersFromDb };
+async function getSingleOrderFromDb(id: string, next: NextFunction) {
+
+    try {
+        const result = await Order.findById(id);
+
+        return { success: true, statusCode: httpStatus.OK, message: 'Order retrieve successfully', data: result, error: null };
+
+    } catch (error) {
+        next(error)
+    }
+}
+
+export const OrderServices = { createOrderIntoDb, getOrdersFromDb, getSingleOrderFromDb };
