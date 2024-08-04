@@ -7,8 +7,8 @@ import config from "./app/configs";
 
         try {
 
-            await mongoose.connect(config.mongodb_uri as string);
-            console.log("Pinged your deployment. You successfully connected to MongoDB!")
+            // await mongoose.connect(config.mongodb_uri as string);
+            // console.log("Pinged your deployment. You successfully connected to MongoDB!")
 
             app.listen(config.port, () => {
                 console.log(`LocalLoop listening on port ${config.port}`)

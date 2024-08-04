@@ -1,3 +1,4 @@
+import { Types } from "mongoose";
 
 export interface TUser {
     email: string;
@@ -9,7 +10,7 @@ export interface TUser {
 }
 
 export interface TOrder {
-    id: string;
+    id: Types.ObjectId;
     title: string;
     img: string;
     stock: number;

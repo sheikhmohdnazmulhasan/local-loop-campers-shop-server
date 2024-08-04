@@ -21,8 +21,10 @@ const orderSchema = z.object({
 
 // Define the UserOrders schema
 const createOrdersValidationSchema = z.object({
-    user: userSchema,
-    orders: z.array(orderSchema)
+    body: z.object({
+        user: userSchema,
+        orders: z.array(orderSchema)
+    })
 });
 
 export const OrderValidation = { createOrdersValidationSchema }
