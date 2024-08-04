@@ -7,7 +7,13 @@ import httpStatus from "http-status";
 
 async function createOrderIntoDb(payload: TUserOrders, next: NextFunction) {
     const filteredOrders = filterOrders(payload.orders);
-    const dataForNewOrder = { ...payload, orders: filteredOrders };
+
+    const dataForNewOrder = {
+        ...payload, orders: filteredOrders, others: {
+            track: Math.floor(Math.random() * 900000000000),
+            status: 'processing'
+        }
+    };
 
     try {
 
@@ -23,7 +29,6 @@ async function createOrderIntoDb(payload: TUserOrders, next: NextFunction) {
     } catch (error) {
         next(error);
     }
-
 }
 
 export const OrderServices = { createOrderIntoDb }

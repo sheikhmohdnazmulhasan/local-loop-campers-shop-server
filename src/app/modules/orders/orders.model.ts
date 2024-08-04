@@ -1,5 +1,5 @@
 import { model, Schema } from "mongoose";
-import { TOrder, TUser, TUserOrders } from "./orders.interface";
+import { TOrder, TOthers, TUser, TUserOrders } from "./orders.interface";
 
 // child
 const userSchema = new Schema<TUser>({
@@ -17,10 +17,17 @@ const orderSchema = new Schema<TOrder>({
     quantity: { type: Number, required: true },
 });
 
+// child
+const othersSchema = new Schema<TOthers>({
+    track: { type: Number, required: true },
+    status: { type: String, required: true }
+})
+
 // parent
 const userOrdersSchema = new Schema<TUserOrders>({
     user: { type: userSchema, required: true },
-    orders: { type: [orderSchema], required: true }
+    orders: { type: [orderSchema], required: true },
+    others: { type: othersSchema, required: true }
 });
 
 const Order = model<TUserOrders>('order', userOrdersSchema);

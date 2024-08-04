@@ -18,8 +18,14 @@ export interface TOrder {
     payable: number;
 }
 
+export interface TOthers {
+    track: number;
+    status: string;
+}
+
 export interface TUserOrders {
     user: TUser;
     orders: TOrder[];
+    others: TOthers;
 }
 
