@@ -50,4 +50,19 @@ async function createOrderIntoDb(payload: TUserOrders, next: NextFunction) {
     }
 }
 
-export const OrderServices = { createOrderIntoDb };
+async function getOrdersFromDb(next: NextFunction) {
+
+    try {
+        const result = await Order.find().populate({
+            path: 'orders',
+            model: 'Product'
+        })
+
+        return { success: true, statusCode: httpStatus.OK, message: 'Orders retrieve successfully', data: result, error: null };
+
+    } catch (error) {
+        next(error)
+    }
+}
+
+export const OrderServices = { createOrderIntoDb, getOrdersFromDb };

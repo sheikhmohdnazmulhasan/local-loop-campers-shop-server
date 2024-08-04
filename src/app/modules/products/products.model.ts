@@ -11,5 +11,5 @@ const productsSchema = new Schema<TProducts>({
 
 }, { timestamps: true });
 
-const Product = mongoose.model<TProducts>('product', productsSchema);
+const Product = mongoose.model<TProducts>('Product', productsSchema);
 export default Product

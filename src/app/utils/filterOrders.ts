@@ -5,7 +5,10 @@ const filterOrders = (orders: TOrder[]) => {
     return orders.map(order => {
         return {
             id: order.id,
-            quantity: order.quantity
+            quantity: order.quantity,
+            img: order.img,
+            value: order.payable,
+            title: order.title
         };
     });
 };

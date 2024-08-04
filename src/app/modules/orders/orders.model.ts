@@ -13,8 +13,11 @@ const userSchema = new Schema<TUser>({
 
 // child
 const orderSchema = new Schema<TOrder>({
-    id: { type: Schema.Types.ObjectId, required: true, ref: 'Product' },
+    id: { type: Schema.Types.ObjectId, required: true },
     quantity: { type: Number, required: true },
+    img: { type: String, required: true },
+    value: { type: Number, required: true },
+    title: { type: String, required: true },
 });
 
 // child
@@ -27,8 +30,10 @@ const othersSchema = new Schema<TOthers>({
 const userOrdersSchema = new Schema<TUserOrders>({
     user: { type: userSchema, required: true },
     orders: { type: [orderSchema], required: true },
-    others: { type: othersSchema, required: true}
+    others: { type: othersSchema, required: true }
 });
 
-const Order = model<TUserOrders>('order', userOrdersSchema);
+
+
+const Order = model<TUserOrders>('Order', userOrdersSchema);
 export default Order

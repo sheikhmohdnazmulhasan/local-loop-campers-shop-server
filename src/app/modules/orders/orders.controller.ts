@@ -21,4 +21,24 @@ async function createOrder(req: Request, res: Response, next: NextFunction) {
     }
 }
 
-export const OrderControllers = { createOrder }
+async function getOrders(req: Request, res: Response, next: NextFunction) {
+
+    try {
+        const result = await OrderServices.getOrdersFromDb(next);
+
+        if (result) {
+            res.status(result.statusCode).json({
+                success: result.success,
+                statusCode: result.statusCode,
+                message: result.message,
+                data: result.data,
+                error: result.error
+            })
+        }
+
+    } catch (error) {
+        next(error)
+    }
+}
+
+export const OrderControllers = { createOrder, getOrders }

@@ -16,6 +16,7 @@ export interface TOrder {
     stock: number;
     quantity: number;
     payable: number;
+    value?: number;
 }
 
 export interface TOthers {
