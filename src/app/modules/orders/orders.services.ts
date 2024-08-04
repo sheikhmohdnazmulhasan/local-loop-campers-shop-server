@@ -4,31 +4,50 @@ import { TUserOrders } from "./orders.interface";
 import filterOrders from "../../utils/filterOrders";
 import Order from "./orders.model";
 import httpStatus from "http-status";
+import mongoose from "mongoose";
 
 async function createOrderIntoDb(payload: TUserOrders, next: NextFunction) {
+    const session = await mongoose.startSession();
     const filteredOrders = filterOrders(payload.orders);
 
     const dataForNewOrder = {
-        ...payload, orders: filteredOrders, others: {
+        ...payload,
+        orders: filteredOrders,
+        others: {
             track: Math.floor(Math.random() * 900000000000),
             status: 'processing'
         }
     };
 
     try {
+        session.startTransaction();
 
-        payload.orders.forEach(async (order) => {
-            const updatedQuantity: number = order.stock - order.quantity;
-            await Product.findByIdAndUpdate(order.id, { quantity: updatedQuantity });
-        });
+        for (const order of payload.orders) {
+            const product = await Product.findById(order.id).session(session);
 
-        const result = await Order.create(dataForNewOrder);
+            if (product) {
+                const updatedQuantity: number = product.quantity - order.quantity;
+                if (updatedQuantity < 0) {
+                    throw new Error(`Not enough stock for product ${product.title}`);
+                }
+                await Product.findByIdAndUpdate(order.id, { quantity: updatedQuantity }).session(session);
+            } else {
+                throw new Error(`Product with id ${order.id} not found`);
+            }
+        }
+
+        const result = await Order.create([dataForNewOrder], { session });
+
+        await session.commitTransaction();
+        session.endSession();
 
         return { success: true, statusCode: httpStatus.OK, message: 'Order Placed successfully', data: result, error: null };
 
     } catch (error) {
+        await session.abortTransaction();
+        session.endSession();
         next(error);
     }
 }
 
-export const OrderServices = { createOrderIntoDb }
+export const OrderServices = { createOrderIntoDb };
