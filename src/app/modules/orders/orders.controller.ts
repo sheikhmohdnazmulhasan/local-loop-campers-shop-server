@@ -62,4 +62,25 @@ async function getSingleOrder(req: Request, res: Response, next: NextFunction) {
     }
 }
 
-export const OrderControllers = { createOrder, getOrders, getSingleOrder }
+async function deleteOrder(req: Request, res: Response, next: NextFunction) {
+    const { id } = req.query;
+
+    try {
+        const result = await OrderServices.deleteOrderFromDb(id as string, next);
+
+        if (result) {
+            res.status(result.statusCode).json({
+                success: result.success,
+                statusCode: result.statusCode,
+                message: result.message,
+                data: result.data,
+                error: result.error
+            })
+        }
+
+    } catch (error) {
+        next(error)
+    }
+}
+
+export const OrderControllers = { createOrder, getOrders, getSingleOrder, deleteOrder }

@@ -6,7 +6,8 @@ import { OrderValidation } from "./orders.validation";
 const router = Router()
 
 router.post('/', ValidationRequest(OrderValidation.createOrdersValidationSchema), OrderControllers.createOrder);
-router.get('/:id', OrderControllers.getSingleOrder)
-router.get('/', OrderControllers.getOrders)
+router.get('/:id', OrderControllers.getSingleOrder);
+router.get('/', OrderControllers.getOrders);
+router.delete('/', OrderControllers.deleteOrder);
 
 export const OrderRouts = router;

@@ -41,7 +41,13 @@ async function createOrderIntoDb(payload: TUserOrders, next: NextFunction) {
         await session.commitTransaction();
         session.endSession();
 
-        return { success: true, statusCode: httpStatus.OK, message: 'Order Placed successfully', data: result, error: null };
+        return {
+            success: true,
+            statusCode: httpStatus.OK,
+            message: 'Order Placed successfully',
+            data: result,
+            error: null
+        };
 
     } catch (error) {
         await session.abortTransaction();
@@ -58,7 +64,13 @@ async function getOrdersFromDb(next: NextFunction) {
             model: 'Product'
         })
 
-        return { success: true, statusCode: httpStatus.OK, message: 'Orders retrieve successfully', data: result, error: null };
+        return {
+            success: true,
+            statusCode: httpStatus.OK,
+            message: 'Orders retrieve successfully',
+            data: result,
+            error: null
+        };
 
     } catch (error) {
         next(error)
@@ -70,11 +82,45 @@ async function getSingleOrderFromDb(id: string, next: NextFunction) {
     try {
         const result = await Order.findById(id);
 
-        return { success: true, statusCode: httpStatus.OK, message: 'Order retrieve successfully', data: result, error: null };
+        return {
+            success: true,
+            statusCode: httpStatus.OK,
+            message: 'Order retrieve successfully',
+            data: result,
+            error: null
+        };
 
     } catch (error) {
         next(error)
     }
 }
 
-export const OrderServices = { createOrderIntoDb, getOrdersFromDb, getSingleOrderFromDb };
+async function deleteOrderFromDb(id: string, next: NextFunction) {
+
+    try {
+        const result = await Order.findByIdAndDelete(id);
+
+        if (!result) {
+            return {
+                success: false,
+                statusCode: httpStatus.OK,
+                message: 'Order Not Found',
+                data: null,
+                error: 'Order with the specified ID does not exist'
+            };
+        }
+
+        return {
+            success: true,
+            statusCode: httpStatus.OK,
+            message: 'Order delete successfully',
+            data: result,
+            error: null
+        };
+
+    } catch (error) {
+        next(error)
+    }
+}
+
+export const OrderServices = { createOrderIntoDb, getOrdersFromDb, getSingleOrderFromDb, deleteOrderFromDb };
