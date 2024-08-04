@@ -1,6 +1,7 @@
 import { model, Schema } from "mongoose";
 import { TOrder, TUser, TUserOrders } from "./orders.interface";
 
+// child
 const userSchema = new Schema<TUser>({
     email: { type: String, required: true },
     country: { type: String, required: true },
@@ -10,6 +11,7 @@ const userSchema = new Schema<TUser>({
     name: { type: String, required: true }
 });
 
+// child
 const orderSchema = new Schema<TOrder>({
     id: { type: String, required: true },
     title: { type: String, required: true },
@@ -19,6 +21,7 @@ const orderSchema = new Schema<TOrder>({
     payable: { type: Number, required: true }
 });
 
+// parent
 const userOrdersSchema = new Schema<TUserOrders>({
     user: { type: userSchema, required: true },
     orders: { type: [orderSchema], required: true }
