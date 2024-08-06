@@ -23,10 +23,9 @@ async function createProduct(req: Request, res: Response, next: NextFunction) {
 };
 
 async function getAllProducts(req: Request, res: Response, next: NextFunction) {
-    const { category } = req.query;
 
     try {
-        const result = await ProductServices.getAllProductsFromDb(category as string | undefined, next);
+        const result = await ProductServices.getAllProductsFromDb(req.query, next);
 
         if (result) {
             res.status(result.statusCode).json({
@@ -67,8 +66,6 @@ async function getSingleProduct(req: Request, res: Response, next: NextFunction)
 async function updateProduct(req: Request, res: Response, next: NextFunction) {
     const { id } = req.params;
     const payload = req.body;
-
-    console.log(payload);
 
     try {
         const result = await ProductServices.updateProductIntoDb(id, payload, next);

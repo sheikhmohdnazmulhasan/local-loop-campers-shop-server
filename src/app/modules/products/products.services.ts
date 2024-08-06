@@ -22,12 +22,15 @@ async function createProductIntoDb(payload: TProducts, next: NextFunction) {
     }
 };
 
-async function getAllProductsFromDb(category: string | undefined, next: NextFunction) {
+async function getAllProductsFromDb(query: Record<string, unknown>, next: NextFunction) {
+    let searchTerm: string = ''
+    if (query?.searchTerm) searchTerm = query?.searchTerm as string;
+
 
     try {
 
-        if (category) {
-            const result = await Product.find({ category })
+        if (query.category) {
+            const result = await Product.find({ category: query.category })
 
             return {
                 success: true,
@@ -38,7 +41,12 @@ async function getAllProductsFromDb(category: string | undefined, next: NextFunc
             };
         }
 
-        const result = await Product.find();
+        const result = await Product.find({
+            $or: [
+                { title: { $regex: searchTerm, $options: 'i' } },
+                { description: { $regex: searchTerm, $options: 'i' } }
+            ]
+        });
 
         return {
             success: true,

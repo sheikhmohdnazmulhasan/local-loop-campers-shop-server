@@ -59,10 +59,7 @@ async function createOrderIntoDb(payload: TUserOrders, next: NextFunction) {
 async function getOrdersFromDb(next: NextFunction) {
 
     try {
-        const result = await Order.find().populate({
-            path: 'orders',
-            model: 'Product'
-        })
+        const result = await Order.find()
 
         return {
             success: true,

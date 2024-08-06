@@ -31,7 +31,7 @@ const userOrdersSchema = new Schema<TUserOrders>({
     user: { type: userSchema, required: true },
     orders: { type: [orderSchema], required: true },
     others: { type: othersSchema, required: true }
-});
+}, { timestamps: true });
 
 
 
