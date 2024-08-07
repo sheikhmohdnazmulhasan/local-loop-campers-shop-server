@@ -40,7 +40,8 @@ async function getAllProductsFromDb(query: Record<string, unknown>, next: NextFu
     if (searchTerm) {
         filter.$or = [
             { title: { $regex: searchTerm, $options: 'i' } },
-            { description: { $regex: searchTerm, $options: 'i' } }
+            { description: { $regex: searchTerm, $options: 'i' } },
+            { category: { $regex: searchTerm, $options: 'i' } },
         ];
     }
 
