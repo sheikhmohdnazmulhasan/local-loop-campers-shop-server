@@ -1,5 +1,4 @@
 
-```markdown
 #  LocalLoop Backend
 
 Welcome to the backend of LocalLoop, an e-commerce platform dedicated to providing all the necessary and fun items for camping enthusiasts.
