@@ -54,7 +54,8 @@ function getAllProductsFromDb(query, next) {
         if (searchTerm) {
             filter.$or = [
                 { title: { $regex: searchTerm, $options: 'i' } },
-                { description: { $regex: searchTerm, $options: 'i' } }
+                { description: { $regex: searchTerm, $options: 'i' } },
+                { category: { $regex: searchTerm, $options: 'i' } },
             ];
         }
         if (category) {

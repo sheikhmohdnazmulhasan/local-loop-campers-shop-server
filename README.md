@@ -54,7 +54,7 @@ The backend of Campers Shop handles all the server-side logic, including CRUD op
 
 2. **Start the application:**
    ```bash
-  npm run start:dev
+   npm run start:dev
 
 
 ### Usage
